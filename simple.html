@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" integrity="sha384-PmY9l28YgO4JwMKbTvgaS7XNZJ30MK9FAZjjzXtlqyZCqBY6X6bXIkM++IkyinN+" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js" integrity="sha384-vhJnz1OVIdLktyixHY4Uk3OHEwdQqPppqYR8+5mjsauETgLOcEynD9oPHhhz18Nw" crossorigin="anonymous"></script>
+</head>
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+			  <div class="panel-heading">Panel heading</div>
+			  <div id="TablDetails"></div>
+				  <!-- <table class="table table-striped table-bordered">
+				    <thead>
+				    	<tr>	
+				    		<th>Country</th>
+				    		<th>City</th>
+				    	</tr>
+				    </thead>
+				    <tbody>
+				    	<tr>
+				    		<td>India</td>
+				    		<td>Kolkata</td>
+				    	</tr>
+				    </tbody>
+				  </table> -->
+				  <button>Button</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+	$("button").click(function(){
+	  
+		$.ajax({
+	        type:'GET',
+	        url: 'https://api.github.com/repositories',
+	        data :{since1:364},
+	        datatype:'json',
+	        success:function(searchdata) {
+	                 
+                //console.log(searchdata);
+	          	var tbdt="";        
+				var tabl = "<table class='table table-striped table-bordered'><thead><tr><th>ID</th><th>URL</th></tr></thead><tbody>";
+	                        
+	                 	for(var i =0; i <= searchdata.length-1;i++)
+	                 	{
+		                 	tbdt = tbdt + "<tr><td>"+searchdata[i].id+"</td><td>"+searchdata[i].comments_url+"</td>";
+
+		                  	// console.log(searchdata[i].id);
+		                 	// console.log(searchdata[i].comments_url);
+		                 
+		                }
+					tabl = tabl + tbdt + "<tbody></table>"
+
+	             	$("#TablDetails").html(tabl);
+
+            },
+         	error: function(err) {
+	         	alert(err.statusText);
+	         	// console.log(err);
+         	}
+
+        });
+
+	});
+	
+</script>
